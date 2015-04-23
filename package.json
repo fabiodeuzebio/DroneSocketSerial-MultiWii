@@ -18,7 +18,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fabiodeuzebio/SocketDroneBluetooth.git"
+    "url": "https://github.com/fabiodeuzebio/DroneSocketSerial-MultiWii.git"
+    
   },
   "keywords": [
     "Drone",
@@ -29,7 +30,7 @@
   "author": "Fabio Duarte Euzebio",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fabiodeuzebio/SocketDroneBluetooth/issues"
+    "url": "https://github.com/fabiodeuzebio/DroneSocketSerial-MultiWii/issues"
   },
-  "homepage": "https://github.com/fabiodeuzebio/SocketDroneBluetooth"
+  "homepage": "https://github.com/fabiodeuzebio/DroneSocketSerial-MultiWii"
 }
