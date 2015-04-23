@@ -1,18 +1,108 @@
-'use strict';
+(function() {
 
-/* Controllers */
+	'use strict';
 
-angular.module('myApp.controllers', []).
-  controller('AppCtrl', function ($scope, socket) {
-    socket.on('send:name', function (data) {
-      $scope.name = data.name;
-    });
-  }).
-  controller('MyCtrl1', function ($scope, socket) {
-    socket.on('send:time', function (data) {
-      $scope.time = data.time;
-    });
-  }).
-  controller('MyCtrl2', function ($scope) {
-    // write Ctrl here
-  });
+	/* Controllers */
+
+	angular.module('myApp.controllers', [])
+		.controller('RadioControleCtrl', RadioControleCtrl)
+	    .controller('SensoresCtrl', SensoresCtrl)
+	    .controller('GpsCtrl', GpsCtrl)
+	    .controller('MyCtrl', MyCtrl);
+
+
+    /**
+     * Rádio Controle
+     * @type {Array}
+     */
+    RadioControleCtrl.$inject = ['$injector'];
+
+    function RadioControleCtrl($injector) {
+        var viewModel = this;
+        var DroneService = $injector.get('DroneService');
+
+        init();
+
+        function init() {
+            initName();
+
+            function initName() {
+                getName();
+            }
+        }
+
+        function getName() {
+            viewModel.gpsAltitude = DroneService.getGpsAltitude();
+        }
+    }
+
+
+    /**
+     * Sensores
+     * @type {Array}
+     */
+    SensoresCtrl.$inject = ['$injector'];
+
+    function SensoresCtrl($injector) {
+        var viewModel = this;
+        var DroneService = $injector.get('DroneFabio.DroneService');
+
+        init();
+
+        function init() {
+            initName();
+
+            function initName() {
+                getName();
+            }
+        }
+
+        function getName() {
+            viewModel.gpsAltitude = DroneService.getGpsAltitude();
+        }
+
+    }
+
+
+
+    /**
+     * GPS
+     */
+    GpsCtrl.$inject = ['$injector'];
+
+    function GpsCtrl($injector) {
+        var viewModel = this;
+        var DroneService = $injector.get('DroneService');
+
+        viewModel.getAltitude = function() {
+            return DroneService.getGpsAltitude();
+        }
+
+        viewModel.getGpsSatelites = function() {
+            return DroneService.getGpsSatelites();
+        }
+    }
+
+
+
+    /**
+     * MyCtrl
+     */
+    MyCtrl.$inject = ['$injector'];
+
+    function MyCtrl($injector) {
+        var viewModel = this;
+        var socket = $injector.get('socket');
+
+        socket.on('send:time', function (data) {
+	      var t = data.time;
+	      console.log(data.code);
+	    });
+        
+        viewModel.time = function() {
+            return t;
+        }        
+    }   
+	
+
+})();    
