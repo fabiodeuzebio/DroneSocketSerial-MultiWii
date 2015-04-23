@@ -10,7 +10,7 @@
 	"node-static": "^0.7.6",
     "serialport": "^1.6.3"
   },
-  "description": "Start an awesome app with AngularJS on the front, Socket.io + Express + Node on the back. This project is an application skeleton for writing [AngularJS](http://angularjs.org/) apps that use web sockets to add real-time functionality. If you're not planning on using web sockets, you should consider the [Angular Express Seed](https://github.com/btford/angular-express-seed) instead.",
+  "description": "",
   "main": "app.js",
   "devDependencies": {},
   "scripts": {
