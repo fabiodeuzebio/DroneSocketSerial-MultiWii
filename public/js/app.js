@@ -1,6 +1,5 @@
 'use strict';
 
-// Declare app level module which depends on filters, and services
 angular.module('myApp', [
   'ngRoute',
 
@@ -9,7 +8,6 @@ angular.module('myApp', [
   'myApp.services',
   'myApp.directives',
   'myApp.protocolservice',
-
-  // 3rd party dependencies
+  
   'btford.socket-io'
 ]);
