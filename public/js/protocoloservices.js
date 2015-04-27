@@ -47,7 +47,7 @@
                 dataService.angy = data.data[1]; // 1/10 deg
                 dataService.hdg = data.data[2]; // -180 to 180
             }   
-            console.log(data);                            
+            //console.log(data);                            
         });
 
         function _getGpsAltitude() {

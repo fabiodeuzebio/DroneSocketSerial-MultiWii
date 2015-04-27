@@ -63,7 +63,7 @@ MSP.newFrame = new events.EventEmitter();
 MSP.read = function(d) {
     var data = new Uint8Array(d);
 
-    console.log("recebendo");
+    //console.log("recebendo");
 
     for (var i = 0; i < data.length; i++) {
         switch (this.state) {
@@ -387,7 +387,7 @@ MSP.msg = function(code, data) {
     var bufferOut;
     var bufView;
 
-    console.log("enviando");
+    //console.log("enviando");
 
     // always reserve 6 bytes for protocol overhead !
     if (data) {

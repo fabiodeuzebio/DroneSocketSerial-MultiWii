@@ -4,11 +4,21 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "components"
+    "components"    
   ],
   "dependencies": {
-    "angular": "~1.2.14",
+    "bootstrap": "~3.3.4",
+	"angular": "~1.2.14",
     "angular-socket-io": "~0.3.0",
     "angular-route": "~1.2.14"
-  }
+  },
+  "homepage": "https://github.com/fabiodeuzebio/SocketDroneBlueTooth",
+  "authors": [
+    "fabiodeuzebio <fabiodeuzebio@gmail.com>"
+  ],
+  "main": "app.js",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT"
 }
