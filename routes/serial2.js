@@ -3,11 +3,23 @@ var SerialPort = require("serialport").SerialPort;
 var gps = require('./gps');
 var MSP = require('./msp');
 
-var sp = new SerialPort("COM22", { baudrate: 115200},false);
+var sp;
 
-module.exports = function () {
+var serial = {
+	porta : "",
+	baudrate : 0,
+	control : 0,	
+}
 
-	sp.open(function (error) {
+serial.conect = function(porta, baudrate, control){
+   
+    sp = new SerialPort(porta, { baudrate: baudrate}, false);
+    this.porta = porta;
+    this.baudrate = baudrate;
+    this.control = control;
+    console.log('Conectou com Sucesso!');
+
+    sp.open(function (error) {
 	  	if ( error ) {
 	    	console.log('Falha ao abrir a Porta: '+error);
 	  	} else {
@@ -25,7 +37,7 @@ module.exports = function () {
 	    
 	    setInterval(requestLoop, 200);    
 	});
-};
+}
 
 function sleep(time) {
     var stop = new Date().getTime();
@@ -44,6 +56,5 @@ function requestLoop() {
     //sp.write(MSP.msg(MSP.codes.MSP_IDENT));
     //sp.write(MSP.msg(MSP.codes.MSP_STATUS));
 }    
-      
 
-
+module.exports = serial;

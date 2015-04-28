@@ -93,19 +93,23 @@
     function MyCtrl($injector) {
         var viewModel = this;
         var socket = $injector.get('socket');
-        var g = 'data.time';
-        
+                
         socket.on('send:time', function (data) {
 	      var t = data.time;
-          console.log(t);
+          //console.log(t);
 	    });
         
         viewModel.time = function() {
-            return g;
+            return t;
         }
 
         viewModel.serialPort = function(){
-            g = 'Fabio';
+        
+            socket.emit('init', {
+                porta : 'COM22',
+                baudrate : 115200,
+                control : false,                
+            });
         }        
     }   
 	

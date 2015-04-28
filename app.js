@@ -6,7 +6,7 @@ var app = module.exports = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var socket = require('./routes/socket');
-var serial = require('./routes/serial');
+//var serial = require('./routes/serial');
 var MSP = require('./routes/msp');
 
 // all environments
@@ -32,7 +32,7 @@ app.get('*', function(req, res) {
 
 // Socket.io Communication
 io.sockets.on('connection', socket);
-serial();
+//serial();
 
 MSP.newFrame.on('new', function(data) {
 	io.sockets.emit('dataToUi', data);

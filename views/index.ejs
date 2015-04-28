@@ -58,7 +58,7 @@
                           <td>{{GpsCtrl.getAltitude()}}</td>
                       </tr>
                       <tr>
-                          <td class="tdTitle">GPS # Sats</td>
+                          <td class="tdTitle">GPS Satélites</td>
                           <td>{{GpsCtrl.getGpsSatelites()}}</td>
                       </tr>
                   </table>
@@ -124,8 +124,7 @@
 
         <div class="tab-pane" id="navegacao">
           <div data-ng-controller='MyCtrl as MyCtrl' class="col-md-4">
-            <p> Aqui vai ser o map GoogleMaps</p>
-            <p> Teste: Hora certa </p>  {{MyCtrl.time()}}
+            <p> Aqui vai ser o map GoogleMaps</p>            
             <button ng-click="MyCtrl.serialPort()" type="button" class="btn btn-default">SerialPort</button>
           </div> 
         </div>
