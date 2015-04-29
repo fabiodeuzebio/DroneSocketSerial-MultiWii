@@ -7,7 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link type="text/css" rel='stylesheet' href='/css/app.css' media="screen"/>
-    
+
+    <!--script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script-->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=drawing"></script>
+        
     <!-- Carregando o CSS do Bootstrap -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />   
     <!-- jQuery (plugins em JavaScript) -->
@@ -28,6 +31,8 @@
     <script src='js/controllers.js'></script>
     <script src='js/filters.js'></script>
     <script src='js/directives.js'></script>
+
+    <script src='js/maps.js'></script>
     
     <title>DroneFabio</title>
 </head>
@@ -46,13 +51,14 @@
       <ul class="nav nav-pills" active-link>
         <li href="#principal" data-toggle="tab" role="presentation" class="nav active"><a>Principal</a></li>
         <li href="#navegacao" data-toggle="tab" role="presentation" class="nav"><a>Navegação</a></li>      
-      </ul>      
+      </ul> 
+      <hr/>
       <div class="tab-content">
         <div class="tab-pane active" id="principal">
           <div class="row">
             <div data-ng-controller="GpsCtrl as GpsCtrl" class="col-md-4">
               <div class="panel panel-default">
-                  <table class="table">
+                  <table class="table" style="margin-bottom: 20px;">
                       <tr>
                           <td class="tdTitle">Altitude</td>
                           <td>{{GpsCtrl.getAltitude()}}</td>
@@ -124,6 +130,18 @@
 
         <div class="tab-pane" id="navegacao">
           <div data-ng-controller='MyCtrl as MyCtrl' class="col-md-4">
+            <div id="mapCanvas"></div>
+
+              <div id="infoPanel">
+                <b>Marker status:</b>
+                <div id="markerStatus"><i>Click and drag the marker.</i></div>
+                <b>Current position:</b>
+                <div id="info"></div>
+                <b>Closest matching address:</b>
+                <div id="address"></div>
+              </div>
+              <div id="map-canvas"></div>
+
             <p> Aqui vai ser o map GoogleMaps</p>            
             <button ng-click="MyCtrl.serialPort()" type="button" class="btn btn-default">SerialPort</button>
           </div> 
