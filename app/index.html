@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+  <link rel="stylesheet" href="public/css/app.css"/>
+
+  <!-- AngularJS -->
+  <script src='public/bower_components/angular/angular.js'></script>
+  <script src='public/bower_components/angular-route/angular-route.js'></script>
+  <script src='public/bower_components/angular-socket-io/socket.js'></script>
+
+  <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
+  <script src="public/ngmap/js/ng-map.js"></script>
+  
+  <!-- Carregando o CSS do Bootstrap -->
+  <link href="public/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />   
+  <!-- jQuery (plugins em JavaScript) -->
+  <script type="text/javascript" src="public/bower_components/jquery/dist/jquery.js"></script>
+  <!-- componentes JavaScript do bootstrap -->  
+  <script type="text/javascript" src="public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div ng-controller="MyCtrl as MyCtrl" class="container-fluid">
+    <nav class="navbar navbar-inverse">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+          <li class="active"></li>
+        </div>
+    </nav>
+    <ul class="nav nav-pills">
+        <li data-toggle="tab" role="presentation" class="nav" ng-class="{active:MyCtrl.isActive('/configuracao')}"><a href="#/configuracao">Configuração</a></li>
+        <li data-toggle="tab" role="presentation" class="nav" ng-class="{active:MyCtrl.isActive('/principal')}"><a href="#/principal">Principal</a></li>
+        <li data-toggle="tab" role="presentation" class="nav" ng-class="{active:MyCtrl.isActive('/navegacao')}"><a href="#/navegacao">Navegação</a></li>   
+    </ul>
+  </div> 
+  <hr/>
+
+  <div ng-view></div>
+
+  <script src='/socket.io/socket.io.js'></script>
+
+  <script src="public/js/app.js"></script>
+  <script src='public/js/services.js'></script>
+  <script src='public/js/filters.js'></script>
+  <script src='public/js/directives.js'></script>
+  <script src='public/js/protocoloservices.js'></script>  
+  
+  <!-- Controllers -->
+  <script src='public/js/controllers.js'></script>
+  <script src='public/js/gerais.js'></script>   
+  <script src='public/js/gps.js'></script>   
+</body>
+</html>

@@ -1,0 +1,347 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"me",
+				"message_length"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"lo",
+				"log"
+			],
+			[
+				"get",
+				"getGpsVelocidade"
+			],
+			[
+				"_get",
+				"_getGpsVelocidade"
+			],
+			[
+				"_",
+				"_getGpsLatitude"
+			],
+			[
+				"gps",
+				"gpsSpeed"
+			],
+			[
+				"g",
+				"gpsLat"
+			],
+			[
+				"da",
+				"dataService"
+			],
+			[
+				"$s",
+				"$scope	AngularJS"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"h",
+				"h1	Tag"
+			],
+			[
+				"ng-v",
+				"ng-view	AngularJS"
+			],
+			[
+				"whi",
+				"width"
+			],
+			[
+				"l",
+				"li	Tag"
+			],
+			[
+				"u",
+				"ul	Tag"
+			],
+			[
+				"emit",
+				"emitArray"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/TCC3/TESTES/seed-master/seed-master",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/partials",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/css",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/routes"
+	],
+	"file_history":
+	[
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/js/app.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/js/gps.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/js/protocoloservices.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/routes/serial2.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/partials/navegacao.html",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/routes/msp.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/partials/principal.html",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/css/navegacao.css",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/css/app.css",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/index.html",
+		"/D/TCC3/TESTES/angular-google-maps-master/package.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/js/controllers.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/js/myctrl.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/routes/google-maps.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/js/directives.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/bower_components/angular-socket-io/socket.spec.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/partials/config.html",
+		"/D/TCC3/TESTES/seed-master/seed-master/server.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/partials/partial2.html",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/partials/partial1.html",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/public/js/services.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/.bowerrc",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/js/app.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/routes/gps.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/routes/socket.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/js/filters.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/js/services.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/js/controllers.js",
+		"/D/TCC3/TESTES/seed-master/seed-master/app/js/directives.js",
+		"/C/Users/FABIO/Google Drive/MultiWii/SocketDroneBlueTooth/config.html",
+		"/C/Users/FABIO/Google Drive/MultiWii/SocketDroneBlueTooth/views/config.html",
+		"/C/Users/FABIO/Google Drive/MultiWii/SocketDroneBlueTooth/views/index.html",
+		"/C/Users/FABIO/Google Drive/MultiWii/SocketDroneBlueTooth/public/js/controllers.js",
+		"/D/TCC3/TESTES/angular-socket-io-seed-master/app.js",
+		"/D/TCC3/TESTES/angular-socket-io-seed-master/angular-socket-io-seed-master/app.js",
+		"/D/TCC3/TESTES/angular-socket-io-seed-master/angular-socket-io-seed-master/views/partials/partial2.jade",
+		"/D/TCC3/TESTES/angular-socket-io-seed-master/angular-socket-io-seed-master/views/partials/partial1.jade",
+		"/C/Users/FABIO/Google Drive/MultiWii/SocketDroneBlueTooth/public/css/app.css",
+		"/C/Users/FABIO/Google Drive/MultiWii/SocketDroneBlueTooth/public/js/app.js",
+		"/C/Users/FABIO/Google Drive/MultiWii/mspjs-master/teste.js",
+		"/C/Users/FABIO/Google Drive/MultiWii/mspjs-master/i/teste.js",
+		"/C/Users/FABIO/Google Drive/MultiWii/mspjs-master/i/main.js",
+		"/D/TCC3/TESTES/angular-socket-io-seed-master/angular-socket-io-seed-master/views/index.ejs",
+		"/C/Users/FABIO/DroneFabio/command.txt",
+		"/D/TCC3/TESTES/DroneQuadX/app/index.html",
+		"/D/TCC3/TESTES/DroneQuadX/app.js",
+		"/D/TCC3/TESTES/DroneQuadX/app/scripts/lib/main.js",
+		"/D/TCC3/TESTES/DroneQuadX/app/styles/screen.css",
+		"/D/TCC3/TESTES/DroneQuadX/app/styles/main.css",
+		"/D/TCC3/TESTES/Denovo/mspjs-master/msp.js",
+		"/C/Users/FABIO/Google Drive/MultiWii/mspjs-master/app.js",
+		"/C/Users/FABIO/Google Drive/MultiWii/mspjs-master/msp.js",
+		"/C/Users/FABIO/Google Drive/MultiWii/mspjs-master/i/index.html",
+		"/D/TCC3/TESTES/DroneQuadX/app/scripts/app.js",
+		"/D/TCC3/TESTES/webappshangout-master/webappshangout-master/app/index.html",
+		"/D/TCC3/TESTES/mspjs-master/mspjs-master/i/static_g.xml",
+		"/D/TCC3/TESTES/mspjs-master/mspjs-master/i/gadget.xml",
+		"/D/TCC3/TESTES/ArduinoNode.js/server.js",
+		"/D/TCC3/TESTES/ArduinoNode.js/route.js",
+		"/D/TCC3/TESTES/ArduinoNode.js/index.js",
+		"/D/TCC3/TESTES/mspjs-master/mspjs-master/app.js",
+		"/D/TCC3/TESTES/ArduinoNode.js/requestHandlers.js",
+		"/D/TCC3/TESTES/mspjs-master/mspjs-master/i/index.html",
+		"/D/TCC3/TESTES/mspjs-master/mspjs-master/node_modules/socket.io/package.json",
+		"/D/TCC3/TESTES/mspjs-master/mspjs-master/node_modules/socket.io/Readme.md",
+		"/D/TCC3/TESTES/mspjs-master/mspjs-master/i/main.js",
+		"/D/TCC3/TESTES/mspjs-master/mspjs-master/msp.js",
+		"/D/TCC3/TESTES/mspjs-master/mspjs-master/gps.js",
+		"/D/TCC3/ardupilot-mpng-mpng-3.0.1-r4/ardupilot-mpng-mpng-3.0.1-r4/APMrover2/APM_Config.h",
+		"/D/TCC3/MegaPirateNG_2.7_R4/ArduCopter/APM_Config.h"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"getUint8",
+			"MSP_RAW_GPS",
+			"btford.socket-io",
+			"events",
+			"sp.on",
+			"BTApp",
+			"sp",
+			"SerialPort",
+			"window",
+			"MSP_ATTITUDE",
+			"aux",
+			"yaw",
+			"code",
+			"MSP_PIDNAMES",
+			"PIDs",
+			"MSP_MOTOR",
+			"sinal",
+			"angx",
+			"gpsSpeedVal",
+			"MSP_ATTITUDE",
+			"angx",
+			"arm",
+			"accelerometer",
+			"SENSOR_DATA",
+			"gpsSpeed",
+			"newFrame",
+			"emitArray",
+			"MSP_ALTITUDE",
+			"emitArray",
+			"MSP_ALTITUDE",
+			"gpsLatLonVal"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "DroneFabio.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 181.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

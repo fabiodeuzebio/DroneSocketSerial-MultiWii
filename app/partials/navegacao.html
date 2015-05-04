@@ -1,0 +1,64 @@
+<body>
+<link rel="stylesheet" href="public/css/navegacao.css"/>	
+
+<div class="container-fluid">
+<div class="row" ng-controller="GpsCtrl as GpsCtrl">
+	
+		<div>     
+		<div class="col-xs-12 col-sm-6 col-md-8">
+      		<map center="-28.692662, -49.341236" zoom="50" on-click="GpsCtrl.placeMarker()" style="height:450px;">
+        		<custom-control id="go-home" position="TOP_LEFT" index="1" on-click="GpsCtrl.goHome()">
+          			<div style="background-color: black; 
+                    							  color:#fff;
+                      							  cursor:pointer; 
+							                      margin:5px">
+                    	Go Home
+          			</div>
+        		</custom-control>
+
+        		<custom-control id="set-home" position="TOP_LEFT" index="1" on-click="GpsCtrl.setHome()">
+          			<div style="background-color: black; 
+                    							  color:#fff;
+                      							  cursor:pointer; 
+                      							  margin:5px">
+                    	Set Home
+          			</div>
+        		</custom-control>
+
+        		<directions 
+		          	draggable="false"
+		          	panel="directions-panel"
+		          	travel-mode="WALKING"
+		          	waypoints=""
+		          	origin="Criciúma"
+		          	destination="Içara">
+		        </directions>
+      		</map>
+      	</div>
+    </div>
+    <div class="col-xs-6 col-md-4">
+    	<div class="row">        
+           
+            
+          <li>GPS Status: {{GpsCtrl.getGpsFix()}}</li>      
+        
+        	<li>GPS Stélites: {{GpsCtrl.getGpsSatelites()}}</li>			
+    		
+    		
+    			<li>Latitude: {{GpsCtrl.getGpsLatitude()}}</li>			
+    		
+    		
+    			<li>Longitude: {{GpsCtrl.getGpsLongitude()}}</li>			
+    		
+    		
+    			<li>Altitude Barômetro: {{GpsCtrl.getAltitude()}}</li>			
+    		
+    		
+    			<li>Velocidade: {{GpsCtrl.getGpsVelocidade()}}</li>			
+        
+    	</div>    	   
+    </div>
+</div>
+
+</div>
+</body>
