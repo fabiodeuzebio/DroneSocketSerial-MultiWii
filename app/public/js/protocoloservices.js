@@ -16,7 +16,8 @@
             getGpsLatitude: _getGpsLatitude,
             getGpsLongitude: _getGpsLongitude,
             getGpsVelocidade: _getGpsVelocidade,
-            getGpsFix: _getGpsFix
+            getGpsFix: _getGpsFix,
+            getGpsGroundCourse: _gpsGroundCourse
         };
 
         var dataService = {
@@ -45,6 +46,7 @@
                 dataService.gpsLon = data.data[3];
                 dataService.gpsAltitude = data.data[4];
                 dataService.gpsSpeed = data.data[5];
+                dataService.gpsGroundCourse = data.data[6];
                 
             } else if (data.code == 108) {
                 // attitude
@@ -54,6 +56,10 @@
             }   
             //console.log(data);                            
         });
+
+        function _gpsGroundCourse(){
+            return dataService.gpsGroundCourse;
+        }
 
         function _getGpsFix(){
             return dataService.gpsFix;

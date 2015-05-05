@@ -17,6 +17,10 @@ function GpsCtrl($injector, $scope) {
     var home = new google.maps.LatLng(-28.692662, -49.341236);
     var map;
 
+    viewModel.getGpsGroundCourse = function(){
+        return DroneService.getGpsGroundCourse();
+    }
+
     viewModel.getGpsFix = function(){
         return DroneService.getGpsFix();
     }

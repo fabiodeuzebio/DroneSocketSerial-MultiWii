@@ -214,7 +214,7 @@ MSP.process_data = function(code, message_buffer, message_length) {
             emitArray[0] = data.getUint8(0); // fix
             emitArray[1] = data.getUint8(1); // num sat
             emitArray[2] = data.getInt32(2)
-            emitArray[3] = data.getInt32(6)
+            emitArray[3] = data.getUint32(2)
             emitArray[4] = data.getUint16(10); // alt
             emitArray[5] = data.getUint16(12); // speed
             emitArray[6] = data.getUint16(14); // ground course
@@ -324,6 +324,7 @@ MSP.process_data = function(code, message_buffer, message_length) {
         case this.codes.MSP_PIDNAMES:
             
 
+
             var buff = [];
             for (var i = 0; i < data.byteLength; i++) {
                 if (data.getUint8(i) == 0x3B) { // ; (delimeter char)
@@ -335,7 +336,9 @@ MSP.process_data = function(code, message_buffer, message_length) {
                     buff.push(data.getUint8(i));
                 }
             }
+
             break;
+
         case this.codes.MSP_WP:
             console.log(data);
             break;
