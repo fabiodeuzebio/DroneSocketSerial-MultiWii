@@ -63,7 +63,7 @@ MSP.newFrame = new events.EventEmitter();
 MSP.read = function(d) {
     var data = new Uint8Array(d);
 
-    console.log(data);
+    //console.log(data);
 
     
     for (var i = 0; i < data.length; i++) {
@@ -210,14 +210,19 @@ MSP.process_data = function(code, message_buffer, message_length) {
             }
             break;
         case this.codes.MSP_RAW_GPS:
+            
+            var lat = String(data.getInt32(2, 1));
+            var lon = String(data.getInt32(6, 1));
+            var latR = Number(lat.slice(0,-7)+'.'+lat.slice(-7));
+            var lonR = Number(lon.slice(0,-7)+'.'+lon.slice(-7));
 	    
             emitArray[0] = data.getUint8(0); // fix
             emitArray[1] = data.getUint8(1); // num sat
-            emitArray[2] = data.getInt32(2)
-            emitArray[3] = data.getUint32(2)
-            emitArray[4] = data.getUint16(10); // alt
-            emitArray[5] = data.getUint16(12); // speed
-            emitArray[6] = data.getUint16(14); // ground course
+            emitArray[2] = latR//lat
+            emitArray[3] = lonR//lon
+            emitArray[4] = data.getUint16(10, 1); // alt
+            emitArray[5] = data.getUint16(12, 1); // speed
+            emitArray[6] = data.getUint16(14, 1); // ground course
                         
             break;
         case this.codes.MSP_COMP_GPS:

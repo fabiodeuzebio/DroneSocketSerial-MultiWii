@@ -37,6 +37,17 @@ serial.conect = function(porta, baudrate, control){
 	    
 	    setInterval(requestLoop, 200);    
 	});
+
+	sp.on("close", function() {	    
+	    
+	    sp.close(function (error) {
+	  		if ( error ) {
+	    		console.log('Falha ao Fechar a Porta: '+error);
+	  		} else {
+	    		console.log('Porta Serial Fechada');
+			}
+		});    
+	});
 }
 
 function sleep(time) {

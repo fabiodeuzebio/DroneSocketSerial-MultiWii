@@ -37,7 +37,7 @@
 
             if (data.code == 109) {
                 // altitude
-                dataService.altitude = data.data[0];
+                dataService.atitude = data.data[0];
             } else if (data.code == 106) {
                 // raw_gps
                 dataService.gpsFix = data.data[0];
@@ -66,7 +66,7 @@
         }
 
         function _getGpsAltitude() {
-            return dataService.altitude;
+            return dataService.gpsAltitude;
         }
 
         function _getGpsSatelites() {
