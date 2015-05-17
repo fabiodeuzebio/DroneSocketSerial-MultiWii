@@ -32,6 +32,16 @@
             hdg: undefined
         };
 
+        var dataServiceWP = {
+            wp_no: undefined,
+            lat: undefined,
+            lon: undefined,
+            AltHold: undefined,
+            Heading: undefined,
+            Time_to_stay: undefined,
+            Nav_flag: undefined
+        };
+
 
         socket.on('dataToUi', function(data) {            
 
@@ -53,8 +63,17 @@
                 dataService.angx = data.data[0]; // 1/10 deg
                 dataService.angy = data.data[1]; // 1/10 deg
                 dataService.hdg = data.data[2]; // -180 to 180
-            }   
-            //console.log(data);                            
+            } else if (data.code == 118) {  
+
+                dataServiceWP.wp_no = data.data[0];
+                dataServiceWP.lat = data.data[1];
+                dataServiceWP.lon = data.data[2];
+                dataServiceWP.AltHold = data.data[3];
+                dataServiceWP.Heading = data.data[4];
+                dataServiceWP.Time_to_stay = data.data[5];
+                dataServiceWP.Nav_flag = data.data[6];
+                console.log(data);          
+            }                  
         });
 
         function _gpsGroundCourse(){

@@ -15,14 +15,14 @@ function MyCtrl($injector, $location) {
     var socket = $injector.get('socket');               
     
     viewModel.closeSerial = function() {
-        socket.emit('close', {});
+        socket.emit('donwnloadWP', {});
     }
 
     viewModel.serialPort = function(){
     
         socket.emit('init', {
-            porta : 'COM37',
-            baudrate : 57600,
+            porta : 'COM22',
+            baudrate : 115200,
             control : false,                
         });
     }

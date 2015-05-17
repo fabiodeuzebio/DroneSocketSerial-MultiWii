@@ -30,7 +30,7 @@ serial.conect = function(porta, baudrate, control){
 	sp.on("open", function() {	    
 	    
 	    sp.on('data', function(data) {
-	        MSP.read(data);
+	        MSP.read(data);	        
 	    });
 
 	    sleep(5000);
@@ -50,6 +50,40 @@ serial.conect = function(porta, baudrate, control){
 	});
 }
 
+serial.donwnloadWP = function(){
+    var wp = 1;
+    var finished = false;
+
+    while (!finished){
+        msgWP(wp);
+
+        wp++;
+        if (MSP.getStep().flag == MSP.MISSION_FLAG_END) {
+            finished = true;
+        }
+    }
+}
+-
+function msgWP(wp) {
+    var bufferOut;
+    var bufView;
+        
+    bufferOut = new ArrayBuffer(10);
+    bufView = new Uint8Array(bufferOut);
+    var c;
+    
+    bufView[0] = 36; // $
+    bufView[1] = 77; // M
+    bufView[2] = 60; // <
+    bufView[3] = 1; c ^= bufView[3];
+    bufView[4] = MSP.codes.MSP_WP; c ^= bufView[4];
+    bufView[5] = wp; c ^= bufView[5];
+    bufView[6] = c; // checksum
+    
+    sp.write(bufView);
+}
+
+
 function sleep(time) {
     var stop = new Date().getTime();
     while (new Date().getTime() < stop + time) {;
@@ -57,8 +91,10 @@ function sleep(time) {
 }
 
 function requestLoop() {
-    sp.write(MSP.msg(MSP.codes.MSP_RAW_GPS));
+    //sp.write(MSP.msg(MSP.codes.MSP_RAW_GPS));
+    //sp.write(MSP.msg(MSP.codes.MSP_WP));
     //sp.write(MSP.msg(MSP.codes.MSP_ALTITUDE));
+    //sp.write(MSP.msg(MSP.codes.MSP_PID));    
     //sp.write(MSP.msg(MSP.codes.MSP_ATTITUDE));
     //sp.write(MSP.msg(MSP.codes.MSP_RAW_IMU));
     //sp.write(MSP.msg(MSP.codes.MSP_MOTOR));
@@ -66,6 +102,8 @@ function requestLoop() {
     //sp.write(MSP.msg(MSP.codes.MSP_PIDNAMES));  
     //sp.write(MSP.msg(MSP.codes.MSP_IDENT));
     //sp.write(MSP.msg(MSP.codes.MSP_STATUS));
+    //sp.write(MSP.msg(MSP.codes.MSP_BOXNAMES));
+    //sp.write(MSP.msg(MSP.codes.MSP_DEBUG));    
 }    
 
 module.exports = serial;

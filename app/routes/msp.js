@@ -1,14 +1,39 @@
 var events = require('events');
+var serial2 = require('./serial2');
+
+var IDLE =                     0,
+    HEADER_START =             1,
+    HEADER_M =                 2,
+    HEADER_ARROW =             3,
+    HEADER_SIZE =              4,
+    HEADER_CMD =               5,
+    HEADER_ERR =               6,
+
+    MISSION_FLAG_END =      0xA5;
+
+var mission_step = {
+    wp_number:  undefined,
+    action:     undefined,
+    lat:        undefined,
+    lon:        undefined,
+    altitude:   undefined,   
+    p1:         undefined,
+    p2:         undefined,
+    p3:         undefined,
+    flag:               0,
+    wp_updated: undefined
+};    
 
 var MSP = {
-    state:                      0,
+
+    state:                   IDLE, 
     code:                       0,
     message_length_expected:    0,
     message_length_received:    0,
     message_buffer:             undefined,
     message_buffer_uint8_view:  undefined,
     message_checksum:           0,
-    packet_error:               0,
+    packet_error:               0,      
 
     codes: {
     MSP_IDENT:              100,
@@ -60,35 +85,42 @@ var MSP = {
 
 MSP.newFrame = new events.EventEmitter();
 
+MSP.getStep = function(){
+    return mission_step;
+}
+
 MSP.read = function(d) {
     var data = new Uint8Array(d);
 
-    //console.log(data);
-
+    console.log(d);
     
     for (var i = 0; i < data.length; i++) {
         switch (this.state) {
-            case 0: // sync char 1
+            case IDLE: // sync char 1
                 if (data[i] == 36) { // $
-                    this.state++;
+                    this.state = HEADER_START;
                 }
                 break;
-            case 1: // sync char 2
+            case HEADER_START: // sync char 2
                 if (data[i] == 77) { // M
-                    this.state++;
+                    this.state = HEADER_M;
                 } else { // restart and try again
-                    this.state = 0;
+                    this.state = IDLE;
                 }
                 break;
-            case 2: // direction (should be >)
-                if (data[i] == 62) { // >
-                    this.state++;
-                } else { // unknown
-                    this.state = 0;
-                }
 
+            case HEADER_M: // direction (should be >)
+                if (data[i] == 62) { // >
+                    this.state = HEADER_ARROW;
+                } else if(data[i] == 33){
+                    this.state = HEADER_ERR;
+                }
+                else{ // unknown
+                    this.state = IDLE;
+                }
                 break;
-            case 3:
+
+            case HEADER_ARROW:            
                 this.message_length_expected = data[i];
 
                 this.message_checksum = data[i];
@@ -97,28 +129,31 @@ MSP.read = function(d) {
                 this.message_buffer = new ArrayBuffer(this.message_length_expected);
                 this.message_buffer_uint8_view = new Uint8Array(this.message_buffer);
 
-                this.state++;
+                this.state = HEADER_SIZE;
                 break;
-            case 4:
+
+            case HEADER_SIZE:
                 this.code = data[i];
                 this.message_checksum ^= data[i];
 
                 if (this.message_length_expected != 0) { // standard message
-                    this.state++;
+                    this.state = HEADER_CMD;
                 } else { // MSP_ACC_CALIBRATION, etc...
-                    this.state += 2;
+                    this.state = HEADER_ERR;
                 }
                 break;
-            case 5: // payload
+
+            case HEADER_CMD: // payload
                 this.message_buffer_uint8_view[this.message_length_received] = data[i];
                 this.message_checksum ^= data[i];
                 this.message_length_received++;
 
                 if (this.message_length_received >= this.message_length_expected) {
-                    this.state++;
+                    this.state = HEADER_ERR;
                 }
                 break;
-            case 6:
+
+            case HEADER_ERR:
                 if (this.message_checksum == data[i]) {
                     // message received, process
                     this.process_data(this.code, this.message_buffer, this.message_length_expected);
@@ -131,7 +166,7 @@ MSP.read = function(d) {
 
                 // Reset variables
                 this.message_length_received = 0;
-                this.state = 0;
+                this.state = IDLE;
                 break;
         }
     }
@@ -145,9 +180,8 @@ MSP.process_data = function(code, message_buffer, message_length) {
       return;
     }
 
-         
-    //var data = new DataView(message_buffer, 0); // DataView (allowing us to view arrayBuffer as struct/union)
     var emitArray = []; // array for data to be emitted
+    var waipoints = [];
     var PIDs = new Array(9,3);
     PID_names = []; // empty the array as new data is coming in
 
@@ -325,10 +359,11 @@ MSP.process_data = function(code, message_buffer, message_length) {
                     buff.push(data.getUint8(i));
                 }
             }
+
+            console.log('AUX_CONFIG '+ AUX_CONFIG);
+            console.log('buff ' + buff);
             break;
         case this.codes.MSP_PIDNAMES:
-            
-
 
             var buff = [];
             for (var i = 0; i < data.byteLength; i++) {
@@ -342,10 +377,53 @@ MSP.process_data = function(code, message_buffer, message_length) {
                 }
             }
 
+            //console.log(PID_names);
+
             break;
 
         case this.codes.MSP_WP:
-            console.log(data);
+
+            waipoints = [];
+            var ptr = 0;
+            var wp_no = data.getUint8(ptr++);
+
+            console.log('teste');
+
+                        
+            if (wp_no == 0)
+            {
+                // ptr++;  //Action is ignored
+                // mw_gui.GPS_home_lat = BitConverter.ToInt32(inBuf, ptr); ptr += 4;
+                // mw_gui.GPS_home_lon = BitConverter.ToInt32(inBuf, ptr); ptr += 4;
+                // mw_gui.GPS_home_alt = BitConverter.ToInt32(inBuf, ptr); ptr += 4;
+                // bHomeRecorded = true;
+                //flag comes here but not care
+            }
+            if (wp_no == 255)
+            {
+                // ptr++; //action is ignored
+                // mw_gui.GPS_poshold_lat = BitConverter.ToInt32(inBuf, ptr); ptr += 4;
+                // mw_gui.GPS_poshold_lon = BitConverter.ToInt32(inBuf, ptr); ptr += 4;
+                // mw_gui.GPS_poshold_alt = BitConverter.ToInt32(inBuf, ptr); ptr += 4;
+                // bPosholdRecorded = true;
+
+            }
+            if ((wp_no > 0) && (wp_no < 255))     //It is a valid WP response
+            {
+                mission_step.wp_number = wp_no;
+                mission_step.action = data.getInt8(ptr++);
+                mission_step.lat = data.getInt32(ptr, 1); ptr += 4;
+                mission_step.lon = data.getInt32(ptr, 1); ptr += 4;
+                mission_step.altitude = data.getInt32(ptr, 1); ptr += 4;
+                mission_step.p1 = data.getUint16(ptr, 1); ptr += 2;
+                mission_step.p2 = data.getUint16(ptr, 1); ptr += 2;
+                mission_step.p3 = data.getUint16(ptr, 1); ptr += 2;
+                mission_step.flag = data.getInt8(ptr++);
+            }            
+            waipoints.push(mission_step);
+
+            console.log(waipoints);        
+
             break;
         case this.codes.MSP_BOXIDS:
             AUX_CONFIG_IDS = []; // empty the array as new data is coming in
@@ -372,10 +450,13 @@ MSP.process_data = function(code, message_buffer, message_length) {
             break;
         case this.codes.MSP_DEBUG:
             // this is for 10 int32_t, normal MW is 4 int16_t
-            for (var i = 0; i < message_length/4; i++) {
-                emitArray[i] = data.getInt32((4 * i), 1);
+            for (var i = 0; i < message_length/2; i++) {
+                emitArray[i] = data.getInt32((1 * i), 1);
             }
+            //console.log(emitArray)
+
             break;
+
         default:
             console.log('Unknown code detected: ' + code);
     }
@@ -390,6 +471,7 @@ MSP.process_data = function(code, message_buffer, message_length) {
     }
 
     this.newFrame.emit('new', {code:code,codeName:codeName,data:emitArray});  
+    console.log(emitArray)
 
 };
 
@@ -397,13 +479,9 @@ MSP.msg = function(code, data) {
     var bufferOut;
     var bufView;
 
-    
-
-    // always reserve 6 bytes for protocol overhead !
-    if (data) {
-    
-        //bufView = new Buffer((data.length*2)+6); // each data is a uint16 and 6 uint8 for the header
-        
+        // always reserve 6 bytes for protocol overhead !
+    if (data) {    
+                   
         var checksum = 0;
         
         bufferOut = new ArrayBuffer((data.length*2)+6);
@@ -428,7 +506,8 @@ MSP.msg = function(code, data) {
 
         bufView[5+(data.length*2)] = checksum; // checksum
 
-    } else {
+    }else if(code != 118) {                
+
         bufferOut = new ArrayBuffer(6);
         bufView = new Uint8Array(bufferOut);
 
@@ -441,8 +520,8 @@ MSP.msg = function(code, data) {
 
     }
     
+    //console.log('bufView ' + bufView);
     return bufView;
-
 }
 
 module.exports = MSP;
