@@ -15,6 +15,7 @@ function GpsCtrl($injector, $scope) {
     var viewModel = this;
     var DroneService = $injector.get('DroneService');
     var home = new google.maps.LatLng(-28.692662, -49.341236);
+    var directionsService = new google.maps.DirectionsService();
     var map;
     var path;
     var markers = [];
@@ -23,6 +24,17 @@ function GpsCtrl($injector, $scope) {
         latAtual = -28.692662;
     var lonAnt = -49.341236, 
         lonAtual = -49.341236;
+
+    var waypoints = [];//HOME POSITION (wp 0)  HOLD position (wp 15)
+    var point = {
+        wp_no: 0,
+        lat: undefined,
+        lon: undefined,
+        AltHold: 25,
+        heading: undefined,
+        time_to_stay: undefined,
+        nav_flag: undefined
+    }    
 
     var poly = poly = new google.maps.Polyline({
         strokeColor: '#000000',
@@ -43,6 +55,8 @@ function GpsCtrl($injector, $scope) {
              scale: .10,
              rotation: 0};    
     }
+
+    $scope.markers = markers;
     
     viewModel.addMarkerAndPath = function(event){
 
@@ -56,8 +70,14 @@ function GpsCtrl($injector, $scope) {
         
         path.push(event.latLng);
         markers.push(marker); 
-        console.log(event.latLng.lat());       
-        console.log(event.latLng.lng());       
+
+        point.wp_no = point.wp_no + 1;
+        point.lat = event.latLng.lat();
+        point.lon = event.latLng.lng();
+        waypoints.push(point);
+        
+        console.log(point);       
+        console.log(waypoints.length);
     } 
 
     viewModel.removeLine = function(){
@@ -73,7 +93,8 @@ function GpsCtrl($injector, $scope) {
             markers[Indexz].setMap(null);
         }               
         path.pop();
-        markers.pop();        
+        markers.pop();   
+        waypoints.pop();
     }
     
 
