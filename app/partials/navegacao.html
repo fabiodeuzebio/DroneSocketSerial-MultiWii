@@ -42,9 +42,31 @@
           <li>Terra: {{GpsCtrl.getGpsGroundCourse()}}</li>   
 
           <li>Teste Lon: {{GpsCtrl.getGpsLon()}}  </li>   
-          <li>Teste Lat: {{GpsCtrl.getGpsLat()}}  </li>   
+          <li>Teste Lat: {{GpsCtrl.getGpsLat()}}  </li>              
           
-        
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Nº</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Alt.</th>
+                <th>Heading</th>
+                <th>Tempo</th>
+              </tr>
+            </thead>
+            <tbody ng-repeat="waypoints in waypoint">
+              <tr>
+                <td>1</td>                
+                <td>{{waypoint.position}}</td>                
+                <td></td>                
+                <td></td>                
+                <td></td>                
+                <td></td>                
+              </tr>              
+            </tbody>
+  
+          </table>
     	</div>    	   
     </div>
 </div>

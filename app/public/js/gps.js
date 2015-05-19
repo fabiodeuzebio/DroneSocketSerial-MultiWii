@@ -57,6 +57,7 @@ function GpsCtrl($injector, $scope) {
     }
 
     $scope.markers = markers;
+    $scope.waypoints = waypoints;
     
     viewModel.addMarkerAndPath = function(event){
 
@@ -71,10 +72,11 @@ function GpsCtrl($injector, $scope) {
         path.push(event.latLng);
         markers.push(marker); 
 
-        point.wp_no = point.wp_no + 1;
+        point.wp_no++;
         point.lat = event.latLng.lat();
         point.lon = event.latLng.lng();
         waypoints.push(point);
+
         
         console.log(point);       
         console.log(waypoints.length);
@@ -82,15 +84,15 @@ function GpsCtrl($injector, $scope) {
 
     viewModel.removeLine = function(){
 
-        var Indexz;
+        var indexz;
 
         if ((markers.length - 1)  < 0){
-            Indexz = 0;  
+            indexz = 0;  
         }else{
-            Indexz = markers.length - 1;
+            indexz = markers.length - 1;
         }
         if(markers.length > 0){
-            markers[Indexz].setMap(null);
+            markers[indexz].setMap(null);
         }               
         path.pop();
         markers.pop();   
