@@ -18,23 +18,26 @@ function GpsCtrl($injector, $scope) {
     var directionsService = new google.maps.DirectionsService();
     var map;
     var path;
+    var ponto;
     var markers = [];
     var marker;
     var latAnt = -28.692662, 
         latAtual = -28.692662;
     var lonAnt = -49.341236, 
-        lonAtual = -49.341236;
+        lonAtual = -49.341236;    
 
     var waypoints = [];//HOME POSITION (wp 0)  HOLD position (wp 15)
-    var point = {
-        wp_no: 0,
-        lat: undefined,
-        lon: undefined,
-        AltHold: 25,
-        heading: undefined,
-        time_to_stay: undefined,
-        nav_flag: undefined
-    }    
+
+
+    function point(wp_no,lat,lon,AltHold,heading,time_to_stay,nav_flag) {
+        this.wp_no = wp_no;
+        this.lat = lat;
+        this.lon = lon;
+        this.AltHold = AltHold;
+        this.heading = heading;
+        this.time_to_stay = time_to_stay;
+        this.nav_flag = nav_flag;
+    }
 
     var poly = poly = new google.maps.Polyline({
         strokeColor: '#000000',
@@ -56,8 +59,7 @@ function GpsCtrl($injector, $scope) {
              rotation: 0};    
     }
 
-    $scope.markers = markers;
-    $scope.waypoints = waypoints;
+    $scope.markers = markers;    
     
     viewModel.addMarkerAndPath = function(event){
 
@@ -72,15 +74,28 @@ function GpsCtrl($injector, $scope) {
         path.push(event.latLng);
         markers.push(marker); 
 
-        point.wp_no++;
-        point.lat = event.latLng.lat();
-        point.lon = event.latLng.lng();
-        waypoints.push(point);
-
+        ponto = new point(            
+            point.wp_no++,
+            event.latLng.lat(),
+            event.latLng.lng(),
+            25,
+            undefined,
+            undefined,
+            undefined
+        );
         
-        console.log(point);       
-        console.log(waypoints.length);
+        addWaipoint(ponto);
     } 
+
+
+    function addWaipoint(point){
+        
+        waypoints.push(point);
+        
+        $scope.waypoints = waypoints;             
+        console.log(waypoints);
+    }
+
 
     viewModel.removeLine = function(){
 

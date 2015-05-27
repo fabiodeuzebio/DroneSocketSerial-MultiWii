@@ -21,7 +21,29 @@
     <div class="col-xs-6 col-md-4">
     	<div class="row">        
 
-           
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Nº</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Alt.</th>
+                <th>Heading</th>
+                <th>Tempo</th>
+              </tr>
+            </thead>
+            <tbody ng-repeat="waypoint in waypoints">
+              <tr>
+                <td>1</td>                
+                <td>{{waypoint.lat}}</td>                
+                <td>{{waypoint.lon}}</td>                
+                <td>{{waypoint.AltHold}}</td>                
+                <td>{{waypoint.heading}}</td>                
+                <td>{{waypoint.time_to_stay}}</td>                
+              </tr>              
+            </tbody>  
+          </table>  
+
             
           <li>GPS Status: {{GpsCtrl.getGpsFix()}}</li>      
         
@@ -41,32 +63,13 @@
 
           <li>Terra: {{GpsCtrl.getGpsGroundCourse()}}</li>   
 
-          <li>Teste Lon: {{GpsCtrl.getGpsLon()}}  </li>   
-          <li>Teste Lat: {{GpsCtrl.getGpsLat()}}  </li>              
           
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>Nº</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Alt.</th>
-                <th>Heading</th>
-                <th>Tempo</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="waypoints in waypoint">
-              <tr>
-                <td>1</td>                
-                <td>{{waypoint.position}}</td>                
-                <td></td>                
-                <td></td>                
-                <td></td>                
-                <td></td>                
-              </tr>              
-            </tbody>
-  
-          </table>
+
+
+          
+          
+          
+
     	</div>    	   
     </div>
 </div>
