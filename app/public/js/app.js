@@ -8,6 +8,7 @@
     'myApp.controllers-gerais',
     'myApp.controllers-gps',
     'myApp.protocolservice',
+    'myApp.waypoint',
     'btford.socket-io',
     'ngMap'
     ])
