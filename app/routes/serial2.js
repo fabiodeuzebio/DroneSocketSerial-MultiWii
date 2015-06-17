@@ -91,7 +91,7 @@ function sleep(time) {
 }
 
 function requestLoop() {
-    //sp.write(MSP.msg(MSP.codes.MSP_RAW_GPS));
+    sp.write(MSP.msg(MSP.codes.MSP_RAW_GPS));
     //sp.write(MSP.msg(MSP.codes.MSP_WP));
     //sp.write(MSP.msg(MSP.codes.MSP_ALTITUDE));
     //sp.write(MSP.msg(MSP.codes.MSP_PID));    

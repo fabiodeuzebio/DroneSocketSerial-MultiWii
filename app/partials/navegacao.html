@@ -5,18 +5,19 @@
 <div class="row" ng-controller="GpsCtrl as GpsCtrl">
 	
 		<div>     
-		<div class="col-xs-12 col-sm-6 col-md-8">
-    <div id="panel">
-      <input ng-click="GpsCtrl.removeLine()" type="button" value="Remove Line">
-    </div>  
+		  <div class="col-xs-12 col-sm-6 col-md-8">
+     
       		<map center="[{{GpsCtrl.getGpsLat()}}, {{GpsCtrl.getGpsLon()}}]" zoom="17" style="height:450px;" on-click="GpsCtrl.addMarkerAndPath()">
 
             <marker position="[{{GpsCtrl.getGpsLat()}}, {{GpsCtrl.getGpsLon()}}]" 
                     icon="{{GpsCtrl.icon()}}">
             </marker>
+
+            
             
       		</map>
-      	</div>
+          
+      </div>
     </div>
     <div class="col-xs-6 col-md-4">
     	<div class="row">        
@@ -35,8 +36,8 @@
             <tbody ng-repeat="waypoint in points">
               <tr>
                 <td>1</td>                
-                <td>{{waypoint.lat}}</td>                
-                <td>{{waypoint.lon}}</td>                
+                <td>{{waypoint.lat.toFixed(5)}}</td>                
+                <td>{{waypoint.lon.toFixed(5)}}</td>                
                 <td>{{waypoint.AltHold}}</td>                
                 <td>{{waypoint.heading}}</td>                
                 <td>{{waypoint.time_to_stay}}</td>                
@@ -56,18 +57,19 @@
     			<li>Longitude: {{GpsCtrl.getGpsLongitude()}}</li>			
     		
     		
-    			<li>Altitude Barômetro: {{GpsCtrl.getAltitude()}}</li>			
+    			<li>Altitude GPS: {{GpsCtrl.getAltitude()}}</li>			
     		
     		
     			<li>Velocidade: {{GpsCtrl.getGpsVelocidade()}}</li>			
 
           <li>Terra: {{GpsCtrl.getGpsGroundCourse()}}</li>   
 
-          
-
-
-          
-          
+          <div id="panel">
+            <input ng-click="GpsCtrl.removeLine()" type="button" value="Baixar Missão">
+            <input ng-click="GpsCtrl.removeLine()" type="button" value="Gravar Missão">
+            <input ng-click="GpsCtrl.removeLine()" type="button" value="Iniciar">
+            <input ng-click="GpsCtrl.removeLine()" type="button" value="Abortar Missão">
+          </div>      
           
 
     	</div>    	   

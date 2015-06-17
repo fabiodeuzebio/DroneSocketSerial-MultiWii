@@ -1,0 +1,13 @@
+#rodape {
+  height: 25px;
+  clear: both;
+  background: #337AB7;
+  border: 0px solid #fff;
+}
+
+#rodape p {
+  margin: 20px;
+  font-size: 9px;
+  line-height: 2;
+  color: #fff;
+}

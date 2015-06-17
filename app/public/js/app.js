@@ -15,11 +15,6 @@
 
   .config(['$routeProvider', function($routeProvider) {
   
-      $routeProvider.when('/configuracao', {
-        templateUrl: 'partials/config.html',
-        controller: 'MyCtrl'
-      });
-
       $routeProvider.when('/principal', {
         templateUrl: 'partials/principal.html',
         controller: 'GpsCtrl'
@@ -31,7 +26,7 @@
       });
 
       return $routeProvider.otherwise({
-        redirectTo: '/configuracao'
+        redirectTo: '/principal'
       });
     }
   ]);
