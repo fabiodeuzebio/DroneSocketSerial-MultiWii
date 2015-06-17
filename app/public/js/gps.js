@@ -14,8 +14,7 @@ GpsCtrl.$inject = ['$injector', '$scope'];
 function GpsCtrl($injector, $scope) {
     var viewModel = this;
     var DroneService = $injector.get('DroneService');
-    var WaypointHist = $injector.get('WaypointHist');
-    console.log(WaypointHist);
+    var WaypointHist = $injector.get('WaypointHist');    
 
     var home = new google.maps.LatLng(-28.692662, -49.341236);
     var directionsService = new google.maps.DirectionsService();
@@ -28,10 +27,21 @@ function GpsCtrl($injector, $scope) {
         latAtual = -28.692662;
     var lonAnt = -49.341236,
         lonAtual = -49.341236;
+    var poly = poly = new google.maps.Polyline({
+        strokeColor: '#000000',
+        strokeOpacity: 1.0,
+        strokeWeight: 3
+    });        
 
-    //var waypoints = [];//HOME POSITION (wp 0)  HOLD position (wp 15)
+    $scope.$on('mapInitialized', function(evt, map) {
+        poly.setMap(map);       
+    });
+    $scope.markers = WaypointHist.getMakers();
+    $scope.points = WaypointHist.getPoints();
 
 
+
+    //HOME POSITION (wp 0)  HOLD position (wp 15)
     function point(wp_no, lat, lon, AltHold, heading, time_to_stay, nav_flag) {
         this.wp_no = wp_no;
         this.lat = lat;
@@ -41,16 +51,9 @@ function GpsCtrl($injector, $scope) {
         this.time_to_stay = time_to_stay;
         this.nav_flag = nav_flag;
     }
-
-    var poly = poly = new google.maps.Polyline({
-        strokeColor: '#000000',
-        strokeOpacity: 1.0,
-        strokeWeight: 3
-    });
-
-    $scope.$on('mapInitialized', function(evt, map) {
-        poly.setMap(map);
-    });
+    function addMarkerAndPathHist(markers){
+        console.log(markers);
+    }
 
     viewModel.icon = function() {
         return {
@@ -63,13 +66,17 @@ function GpsCtrl($injector, $scope) {
             rotation: 0
         };
     }
-
-    $scope.markers = markers;
-    $scope.points = WaypointHist.getPoints()
-
+    
     viewModel.addMarkerAndPath = function(event) {
 
         path = poly.getPath();
+
+        if(marker == undefined){
+            console.log('nulo');
+        }else{
+            console.log(marker);
+        }
+
 
         marker = new google.maps.Marker({
             position: event.latLng,
@@ -77,8 +84,7 @@ function GpsCtrl($injector, $scope) {
             map: $scope.map
         });
 
-        path.push(event.latLng);
-        markers.push(marker);
+        path.push(event.latLng);        
 
         ponto = new point(
             point.wp_no++,
@@ -90,6 +96,7 @@ function GpsCtrl($injector, $scope) {
             undefined
         );
 
+        WaypointHist.addMakers(marker);
         WaypointHist.addPoint(ponto);
     }
 

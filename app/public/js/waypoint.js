@@ -7,18 +7,29 @@
 
 	function WaypointHist() {
 
-		var waypoints = [];
+		var waypoints = [],
+		    Markers = [];
 
-		var metodos = {
+
+		var metodos = {			
 			getPoints: function() {
 				return waypoints;
 			},
 			addPoint: function(point) {
 				waypoints.push(point);
 			},
-			update: function(points){
+			updatePoint: function(points){
 				waypoints = points;
-			}
+			},			           
+			getMakers: function() {
+				return Markers;
+			},
+			addMakers: function(mark) {
+				Markers.push(mark);
+			},
+			updateMakers: function(markers){
+				Markers = markers;
+			},
 		};
 
 		return metodos;
