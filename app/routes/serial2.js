@@ -96,7 +96,7 @@ function requestLoop() {
     //sp.write(MSP.msg(MSP.codes.MSP_ALTITUDE));
     //sp.write(MSP.msg(MSP.codes.MSP_PID));    
     //sp.write(MSP.msg(MSP.codes.MSP_ATTITUDE));
-    //sp.write(MSP.msg(MSP.codes.MSP_RAW_IMU));
+    sp.write(MSP.msg(MSP.codes.MSP_RAW_IMU));
     //sp.write(MSP.msg(MSP.codes.MSP_MOTOR));
     //sp.write(MSP.msg(MSP.codes.MSP_RC));
     //sp.write(MSP.msg(MSP.codes.MSP_PIDNAMES));  
