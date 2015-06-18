@@ -1,14 +1,15 @@
 (function() {
   angular.module('myApp', [
     'ngRoute',
-    'myApp.filters', 
-    'myApp.services', 
+    'myApp.filters',     
     'myApp.directives', 
-    'myApp.controllers',
+    'myApp.controllers-rc',
     'myApp.controllers-gerais',
     'myApp.controllers-gps',
+    'myApp.controllers-sensor',
+    'myApp.socketservice', 
     'myApp.protocolservice',
-    'myApp.waypoint',
+    'myApp.waypointservice',
     'btford.socket-io',
     'ngMap'
     ])
