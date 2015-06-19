@@ -12,19 +12,27 @@ MyCtrl.$inject = ['$injector', '$location'];
 
 function MyCtrl($injector, $location) {
     var viewModel = this;
-    var socket = $injector.get('socket');               
-    
-    viewModel.closeSerial = function() {
-        socket.emit('donwnloadWP', {});
-    }
 
-    viewModel.serialPort = function(){
-    
+    var socket = $injector.get('socket');
+
+    //Conectar Drone
+    viewModel.serialPort = function(){ 
+
         socket.emit('init', {
             porta : 'COM22',
             baudrate : 115200,
             control : false,                
         });
+    }
+
+    //Calibrar acelerometro
+    viewModel.calibrarAcc = function(){
+        socket.emit('calibrarAcc', {});
+    }
+
+    //Calibrar Magnetometro
+    viewModel.calibrarMag = function(){
+        socket.emit('calibrarMag', {});
     }
     
     viewModel.isActive = function(route){

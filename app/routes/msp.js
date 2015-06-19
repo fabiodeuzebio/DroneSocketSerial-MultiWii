@@ -188,61 +188,57 @@ MSP.process_data = function(code, message_buffer, message_length) {
     // process codes which return data, codes with no data just emit code
     switch (code) {
         case this.codes.MSP_IDENT:
+
             emitArray[0] = parseFloat((data.getUint8(0) / 100).toFixed(2)); // version
             emitArray[1] = data.getUint8(1); // multitype
             emitArray[2] = data.getUint8(2); // msp_version
             emitArray[3] = data.getUint32(3, 1); // capability
             break;
+
         case this.codes.MSP_STATUS:
+
             emitArray[0] = data.getUint16(0, 1); // cycle time
             emitArray[1] = data.getUint16(2, 1); // i2c error count
             emitArray[2] = data.getUint16(4, 1); // sensor
             emitArray[3] = data.getUint32(6, 1); // flag
             emitArray[4] = data.getUint8(10); // global_conf.currentSet
             break;
-        case this.codes.MSP_RAW_IMU:
-            // 512 for mpu6050, 256 for mma
-            // currently we are unable to differentiate between the sensor types, so we are goign with 512
-            //SENSOR_DATA.accelerometer[0] = data.getInt16(0, 1) / 512;
-            //SENSOR_DATA.accelerometer[1] = data.getInt16(2, 1) / 512;
-            //SENSOR_DATA.accelerometer[2] = data.getInt16(4, 1) / 512;
 
-            // properly scaled
-            //SENSOR_DATA.gyroscope[0] = data.getInt16(6, 1) * (4 / 16.4);
-            //SENSOR_DATA.gyroscope[1] = data.getInt16(8, 1) * (4 / 16.4);
-            //SENSOR_DATA.gyroscope[2] = data.getInt16(10, 1) * (4 / 16.4);
+        case this.codes.MSP_RAW_IMU:  
 
-            // no clue about scaling factor
-            //SENSOR_DATA.magnetometer[0] = data.getInt16(12, 1) / 1090;
-            //SENSOR_DATA.magnetometer[1] = data.getInt16(14, 1) / 1090;
-            //SENSOR_DATA.magnetometer[2] = data.getInt16(16, 1) / 1090;
-
+            //Acelerometro
             emitArray[0]  = data.getInt16(0, 1);
             emitArray[1]  = data.getInt16(2, 1);
-            emitArray[2]  = data.getInt16(4, 1);
+            emitArray[2]  = data.getInt16(4, 1);           
+            //Giroscopio
+            emitArray[3]  = parseInt(data.getInt16(6, 1) * 0.244140625);
+            emitArray[4]  = parseInt(data.getInt16(8, 1) * 0.244140625);
+            emitArray[5]  = parseInt(data.getInt16(10,1) * 0.244140625);            
+            //Magenetometro
+            emitArray[6]  = parseInt(data.getInt16(12, 1) / 3);
+            emitArray[7]  = parseInt(data.getInt16(14, 1) / 3);
+            emitArray[8]  = parseInt(data.getInt16(16, 1) / 3);             
             break;
-        case this.codes.MSP_SERVO:
-            var needle = 0;
-            for (var i = 0; i < 8; i++) {
-                SERVO_DATA[i] = data.getUint16(needle, 1);
-
-                needle += 2;
-            }
-            break;
+        
         case this.codes.MSP_MOTOR:
+
             var needle = 0;
             for (var i = 0; i < 8; i++) {
                 emitArray[i] = data.getUint16(needle, 1);
-
                 needle += 2;
-            }
+            }           
             break;
-        case this.codes.MSP_RC:
-            for (var i = 0; i < message_length/2; i++) {
-                emitArray[i] = data.getUint16((i * 2));
-                //emitArray[i] = 256*data.getUint8((i * 2)+1, 1)+data.getUint8((i * 2), 1);
-            }
+
+        case this.codes.MSP_RC: 
+
+            emitArray[0] = data.getUint16(0, 1);         
+            emitArray[1] = data.getUint16(2, 1); 
+            emitArray[2] = data.getUint16(4, 1); 
+            emitArray[3] = data.getUint16(6, 1); 
+            emitArray[4] = data.getUint16(8, 1);  
+            emitArray[5] = data.getUint16(10, 1);
             break;
+
         case this.codes.MSP_RAW_GPS:
             
             var lat = String(data.getInt32(2, 1));
@@ -259,36 +255,41 @@ MSP.process_data = function(code, message_buffer, message_length) {
             emitArray[6] = data.getUint16(14, 1); // ground course
                         
             break;
-        case this.codes.MSP_COMP_GPS:
-            emitArray[0] = data.getUint16(0, 1); // distance to home
-            emitArray[1] = data.getUint16(2, 1); // direction to home
-            emitArray[2] = data.getUint8(4); // update
+      
+        case this.codes.MSP_ATTITUDE: 
+
+            emitArray[0] = data.getInt16(0,1) / 10.0; // x/roll
+            emitArray[1] = data.getInt16(2,1) / 10.0; // y/pitch
+            emitArray[2] = data.getInt16(4,1); // heading
             break;
-        case this.codes.MSP_ATTITUDE:
-            emitArray[0] = data.getInt16(0) / 10.0; // x/roll
-            emitArray[1] = data.getInt16(2) / 10.0; // y/pitch
-            emitArray[2] = data.getInt16(4); // heading
-            break;
+
         case this.codes.MSP_ALTITUDE:
             emitArray[0] = parseFloat((data.getInt32(0) / 100.0).toFixed(2)); // correct scale factor // altitude
             emitArray[1] = parseFloat((data.getInt16(4) / 100.0).toFixed(2)); // correct scale factor // vario cm/s
             break;
+
         case this.codes.MSP_ANALOG:
             ANALOG.voltage = data.getUint8(0) / 10.0;
             ANALOG.mAhdrawn = data.getUint16(1, 1);
             ANALOG.rssi = data.getUint16(3, 1); // 0-1023
             ANALOG.amperage = data.getUint16(5, 1) / 100; // A
             break;
-        case this.codes.MSP_RC_TUNING:
-            RC_tuning.RC_RATE = parseFloat((data.getUint8(0) / 100).toFixed(2));
-            RC_tuning.RC_EXPO = parseFloat((data.getUint8(1) / 100).toFixed(2));
-            RC_tuning.roll_pitch_rate = parseFloat((data.getUint8(2) / 100).toFixed(2));
-            RC_tuning.yaw_rate = parseFloat((data.getUint8(3) / 100).toFixed(2));
-            RC_tuning.dynamic_THR_PID = parseFloat((data.getUint8(4) / 100).toFixed(2));
-            RC_tuning.throttle_MID = parseFloat((data.getUint8(5) / 100).toFixed(2));
-            RC_tuning.throttle_EXPO = parseFloat((data.getUint8(6) / 100).toFixed(2));
-            break;
+       
         case this.codes.MSP_PID:
+
+
+             // ptr = 0;
+             //        for (int i = 0; i < iPidItems; i++)
+             //        {
+             //            mw_gui.pidP[i] = (byte)inBuf[ptr++];
+             //            mw_gui.pidI[i] = (byte)inBuf[ptr++];
+             //            mw_gui.pidD[i] = (byte)inBuf[ptr++];
+             //        }
+             //        response_counter++;
+             //        bOptions_needs_refresh = true;
+             //        break;
+
+
             // PID data arrived, we need to scale it and save to appropriate bank / array
             for (var i = 0, needle = 0; i < (message_length / 3); i++, needle += 3) {
                 // main for loop selecting the pid section
@@ -321,6 +322,7 @@ MSP.process_data = function(code, message_buffer, message_length) {
             emitArray[1] = PIDs[4,1];
             emitArray[2] = PIDs[4,2];
             break;
+
         case this.codes.MSP_BOX:
             AUX_CONFIG_values = []; // empty the array as new data is coming in
 
@@ -328,23 +330,8 @@ MSP.process_data = function(code, message_buffer, message_length) {
             for (var i = 0; i < data.byteLength; i += 2) { // + 2 because uint16_t = 2 bytes
                 AUX_CONFIG_values.push(data.getUint16(i, 1));
             }
-            break;
-        case this.codes.MSP_MISC: // 22 bytes
-            MISC.PowerTrigger1 = data.getInt16(0, 1);
-            MISC.minthrottle = data.getUint16(2, 1); // 0-2000
-            MISC.maxthrottle = data.getUint16(4, 1); // 0-2000
-            MISC.mincommand = data.getUint16(6, 1); // 0-2000
-            MISC.failsafe_throttle = data.getUint16(8, 1); // 1000-2000
-            MISC.plog0 = data.getUint16(10, 1);
-            MISC.plog1 = data.getUint32(12, 1);
-            MISC.mag_declination = data.getInt16(16, 1); // -18000-18000
-            MISC.vbatscale = data.getUint8(18, 1); // 10-200
-            MISC.vbatmincellvoltage = data.getUint8(19, 1) / 10; // 10-50
-            MISC.vbatmaxcellvoltage = data.getUint8(20, 1) / 10; // 10-50
-            MISC.empty = data.getUint8(21, 1);
-            break;
-        case this.codes.MSP_MOTOR_PINS:
-            break;
+            break;    
+      
         case this.codes.MSP_BOXNAMES:
             AUX_CONFIG = []; // empty the array as new data is coming in
 
@@ -432,20 +419,7 @@ MSP.process_data = function(code, message_buffer, message_length) {
                 AUX_CONFIG_IDS.push(data.getUint8(i));
             }
             break;
-        case this.codes.MSP_SERVO_CONF:
-            SERVO_CONFIG = []; // empty the array as new data is coming in
-
-            for (var i = 0; i < 56; i += 7) {
-                var arr = {
-                    'min': data.getInt16(i, 1),
-                    'max': data.getInt16(i + 2, 1),
-                    'middle': data.getInt16(i + 4, 1),
-                    'rate': data.getInt8(i + 6)
-                };
-
-                SERVO_CONFIG.push(arr);
-            }
-            break;
+        
         case this.codes.MSP_DEBUGMSG:
             break;
         case this.codes.MSP_DEBUG:
@@ -453,7 +427,7 @@ MSP.process_data = function(code, message_buffer, message_length) {
             for (var i = 0; i < message_length/2; i++) {
                 emitArray[i] = data.getInt32((1 * i), 1);
             }
-            //console.log(emitArray)
+            console.log(emitArray)
 
             break;
 

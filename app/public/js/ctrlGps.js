@@ -14,7 +14,8 @@ GpsCtrl.$inject = ['$injector', '$scope'];
 function GpsCtrl($injector, $scope) {
     var viewModel = this;
     var DroneService = $injector.get('DroneService');
-    var WaypointHist = $injector.get('WaypointHist');    
+    var WaypointHist = $injector.get('WaypointHist');  
+    var socket = $injector.get('socket');   
 
     var home = new google.maps.LatLng(-28.692662, -49.341236);
     var directionsService = new google.maps.DirectionsService();
@@ -186,6 +187,11 @@ function GpsCtrl($injector, $scope) {
 
     viewModel.setHome = function() {
         home = $scope.map.getCenter();
+    }
+
+    //Baixar missao
+    viewModel.donwnloadWP = function() {
+        socket.emit('donwnloadWP', {});
     }
 
 }

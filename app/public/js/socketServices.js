@@ -2,7 +2,7 @@
 
 /* Services */
 
-angular.module('myApp.services', []).
+angular.module('myApp.socketservice', []).
   factory('socket', function (socketFactory) {
     return socketFactory();
   }).
