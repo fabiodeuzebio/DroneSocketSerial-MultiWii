@@ -8,7 +8,8 @@
 	function WaypointHist() {
 
 		var waypoints = [],
-		    Markers = [];
+		    Markers = [],
+		    paths;
 
 
 		var metodos = {			
@@ -16,7 +17,7 @@
 				return waypoints;
 			},
 			addPoint: function(point) {
-				waypoints.push(point);
+				waypoints.push(point);				
 			},
 			updatePoint: function(points){
 				waypoints = points;
@@ -24,11 +25,17 @@
 			getMakers: function() {
 				return Markers;
 			},
-			addMakers: function(mark) {
-				Markers.push(mark);
+			addMakers: function(mark) {	
+				Markers.push(mark);					
 			},
 			updateMakers: function(markers){
 				Markers = markers;
+			},
+			getPath: function() {
+				return paths;
+			},
+			updatePath: function(path){
+				paths = path;
 			},
 		};
 

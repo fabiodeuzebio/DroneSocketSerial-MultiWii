@@ -92,8 +92,7 @@ MSP.getStep = function(){
 MSP.read = function(d) {
     var data = new Uint8Array(d);
 
-    console.log(d);
-    
+        
     for (var i = 0; i < data.length; i++) {
         switch (this.state) {
             case IDLE: // sync char 1
@@ -181,8 +180,11 @@ MSP.process_data = function(code, message_buffer, message_length) {
     }
 
     var emitArray = []; // array for data to be emitted
-    var waipoints = [];
-    var PIDs = new Array(9,3);
+    
+    var pidP = [],
+        pidD = [],
+        pidI = [];
+
     PID_names = []; // empty the array as new data is coming in
 
     // process codes which return data, codes with no data just emit code
@@ -196,12 +198,11 @@ MSP.process_data = function(code, message_buffer, message_length) {
             break;
 
         case this.codes.MSP_STATUS:
-
+            
             emitArray[0] = data.getUint16(0, 1); // cycle time
             emitArray[1] = data.getUint16(2, 1); // i2c error count
             emitArray[2] = data.getUint16(4, 1); // sensor
-            emitArray[3] = data.getUint32(6, 1); // flag
-            emitArray[4] = data.getUint8(10); // global_conf.currentSet
+            emitArray[3] = data.getUint32(6, 1); // flag           
             break;
 
         case this.codes.MSP_RAW_IMU:  
@@ -291,36 +292,72 @@ MSP.process_data = function(code, message_buffer, message_length) {
 
 
             // PID data arrived, we need to scale it and save to appropriate bank / array
-            for (var i = 0, needle = 0; i < (message_length / 3); i++, needle += 3) {
+            needle = 0;
+            for (var i = 0; i < (message_length / 3); i++) {
                 // main for loop selecting the pid section
                 switch (i) {
                     case 0:
+                        pidP[i] = data.getUint8(needle++)/10;
+                        pidI[i] = data.getUint8(needle++)/1000;
+                        pidD[i] = data.getUint8(needle++);                        
+                        break;
                     case 1:
+                        pidP[i] = data.getUint8(needle++)/10;
+                        pidI[i] = data.getUint8(needle++)/1000;
+                        pidD[i] = data.getUint8(needle++);                        
+                        break;
                     case 2:
+                        pidP[i] = data.getUint8(needle++)/10;
+                        pidI[i] = data.getUint8(needle++)/1000;
+                        pidD[i] = data.getUint8(needle++);                        
+                        break;
                     case 3:
-                    case 7:
-                    case 8:
-                    case 9:
-                        PIDs[i,0] = data.getUint8(needle) / 10;
-                        PIDs[i,1] = data.getUint8(needle + 1) / 1000;
-                        PIDs[i,2] = data.getUint8(needle + 2);
+                        pidP[i] = data.getUint8(needle++)/10;
+                        pidI[i] = data.getUint8(needle++)/1000;
+                        pidD[i] = data.getUint8(needle++);                        
                         break;
                     case 4:
-                        PIDs[i,0] = data.getUint8(needle) / 100;
-                        PIDs[i,1] = data.getUint8(needle + 1) / 100;
-                        PIDs[i,2] = data.getUint8(needle + 2) / 1000;
+                        pidP[i] = data.getUint8(needle++)/10;
+                        pidI[i] = data.getUint8(needle++)/1000;
+                        pidD[i] = data.getUint8(needle++);
+                        
                         break;
                     case 5:
-                    case 6:
-                        PIDs[i,0] = data.getUint8(needle) / 10;
-                        PIDs[i,1] = data.getUint8(needle + 1) / 100;
-                        PIDs[i,2] = data.getUint8(needle + 2) / 1000;
+                        pidP[i] = data.getUint8(needle++)/10;
+                        pidI[i] = data.getUint8(needle++)/1000;
+                        pidD[i] = data.getUint8(needle++);
+                        
                         break;
+                    case 6:
+                        pidP[i] = data.getUint8(needle++)/10;
+                        pidI[i] = data.getUint8(needle++)/1000;
+                        pidD[i] = data.getUint8(needle++);
+                        
+                        break;
+                    case 7:
+                        pidP[i] = data.getUint8(needle++)/10;
+                        pidI[i] = data.getUint8(needle++)/1000;
+                        pidD[i] = data.getUint8(needle++);
+                        
+                        break;
+                    case 8:
+                        pidP[i] = data.getUint8(needle++)/10;
+                        pidI[i] = data.getUint8(needle++)/1000;
+                        pidD[i] = data.getUint8(needle++);
+                        
+                        break;
+                    case 9:
+                        pidP[i] = data.getUint8(needle++)/10;
+                        pidI[i] = data.getUint8(needle++)/1000;
+                        pidD[i] = data.getUint8(needle++);
+                        
                 }
             }
-            emitArray[0] = PIDs[4,0];
-            emitArray[1] = PIDs[4,1];
-            emitArray[2] = PIDs[4,2];
+
+            emitArray[0] = pidP;
+            emitArray[1] = pidI;
+            emitArray[2] = pidD;
+            
             break;
 
         case this.codes.MSP_BOX:
@@ -423,12 +460,11 @@ MSP.process_data = function(code, message_buffer, message_length) {
         case this.codes.MSP_DEBUGMSG:
             break;
         case this.codes.MSP_DEBUG:
-            // this is for 10 int32_t, normal MW is 4 int16_t
-            for (var i = 0; i < message_length/2; i++) {
-                emitArray[i] = data.getInt32((1 * i), 1);
-            }
-            console.log(emitArray)
 
+            emitArray[0] = data.getInt16(0,1);
+            emitArray[1] = data.getInt16(2,1);
+            emitArray[2] = data.getInt16(4,1); 
+            emitArray[3] = data.getInt16(6,1); 
             break;
 
         default:
@@ -445,7 +481,7 @@ MSP.process_data = function(code, message_buffer, message_length) {
     }
 
     this.newFrame.emit('new', {code:code,codeName:codeName,data:emitArray});  
-    console.log(emitArray)
+    //console.log(emitArray)
 
 };
 

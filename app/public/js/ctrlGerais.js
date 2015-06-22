@@ -19,8 +19,8 @@ function MyCtrl($injector, $location) {
     viewModel.serialPort = function(){ 
 
         socket.emit('init', {
-            porta : 'COM22',
-            baudrate : 115200,
+            porta : 'COM37',
+            baudrate : 57600,
             control : false,                
         });
     }

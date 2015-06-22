@@ -37,10 +37,12 @@ function GpsCtrl($injector, $scope) {
     $scope.$on('mapInitialized', function(evt, map) {
         poly.setMap(map);       
     });
-    $scope.markers = WaypointHist.getMakers();
+     
+    //$scope.markers = getMarkerAndPathHist();
+    markers = WaypointHist.getMakers();
+    path = WaypointHist.getPath();
     $scope.points = WaypointHist.getPoints();
-
-
+    
 
     //HOME POSITION (wp 0)  HOLD position (wp 15)
     function point(wp_no, lat, lon, AltHold, heading, time_to_stay, nav_flag) {
@@ -52,8 +54,26 @@ function GpsCtrl($injector, $scope) {
         this.time_to_stay = time_to_stay;
         this.nav_flag = nav_flag;
     }
-    function addMarkerAndPathHist(markers){
-        console.log(markers);
+
+    function getMarkerAndPathHist(){
+        var teste = WaypointHist.getMakers();
+
+        if(teste == undefined ) return teste;
+
+        //console.log(teste[0]);
+
+        // for (var i = 0; i < markers.length; i++) {            
+       
+        //     marker = new google.maps.Marker({
+        //         position: markers[i].even.event.latLng,
+        //         title: "#" + markers[i].path.path.getLength(),
+        //         map: markers[i].map.map
+        //     });
+
+        //     path.push(markers[i].even.event.latLng); 
+        // };
+
+        return teste;
     }
 
     viewModel.icon = function() {
@@ -64,21 +84,27 @@ function GpsCtrl($injector, $scope) {
             fillOpacity: 1,
             strokeWeight: 0,
             scale: .10,
-            rotation: 0
+            rotation: DroneService.getOthersHdg()
         };
+    }
+     
+    var obj;
+    function remarkMap(path, even, map){
+        this.path = path;
+        this.latLng = even;
+        this.map = map;
     }
     
     viewModel.addMarkerAndPath = function(event) {
 
-        path = poly.getPath();
+        console.log(path);
 
-        if(marker == undefined){
-            console.log('nulo');
-        }else{
-            console.log(marker);
+        if(markers.length >= 2){
+            removeLinha();
         }
 
-
+        path = poly.getPath();
+        
         marker = new google.maps.Marker({
             position: event.latLng,
             title: "#" + path.getLength(),
@@ -97,13 +123,20 @@ function GpsCtrl($injector, $scope) {
             undefined
         );
 
+        obj = new remarkMap(
+            path, 
+            event.latLng, 
+            $scope.map
+        );
+
         WaypointHist.addMakers(marker);
-        WaypointHist.addPoint(ponto);
+        WaypointHist.updatePath(path);
+        WaypointHist.addPoint(ponto);        
     }
 
-
-
-
+    function removeLinha(){
+        viewModel.removeLine();
+    }
 
     viewModel.removeLine = function() {
 
@@ -120,7 +153,7 @@ function GpsCtrl($injector, $scope) {
         path.pop();
         markers.pop();
         $scope.points.pop();
-        WaypointHist.update($scope.points);
+        WaypointHist.updatePoint($scope.points);
     }
 
 

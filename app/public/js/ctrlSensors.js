@@ -51,4 +51,39 @@ function SensoresCtrl($injector) {
         return DroneService.getSensorMagYaw();
     }
 
+    viewModel.getOthersDebug3 = function(){
+        return DroneService.getOthersDebug3();
+    }
+
+    viewModel.getOthersHdg = function(){
+        return DroneService.getOthersHdg();
+    }
+
+    viewModel.getOthersAltitude = function(){
+        return DroneService.getOthersAltitude();
+    }
+
+    viewModel.getOthersArmado = function(){
+        if (DroneService.getOthersArmado() == 1){
+            return "success";
+        }else{
+            return "primary";
+        }       
+    }
+
+    viewModel.getOtherSensor = function(opc){
+        
+        // ACC & 1
+        // BARO & 2
+        // MAG & 4
+        // GPS & 8
+        // SONAR & 16
+
+        if ((DroneService.getOtherSensor() & opc) != 0){
+            return "success";
+        }else{
+            return "primary";
+        }       
+    }
+
 }

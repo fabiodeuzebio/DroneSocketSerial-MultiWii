@@ -7,6 +7,7 @@
     'myApp.controllers-gerais',
     'myApp.controllers-gps',
     'myApp.controllers-sensor',
+    'myApp.controllers-motors',
     'myApp.socketservice', 
     'myApp.protocolservice',
     'myApp.waypointservice',

@@ -32,7 +32,19 @@
             getRcPitch: _getRcPitch,
             getRcYaw: _getRcYaw,
             getRcAux1: _getRcAux1,
-            getRcAux2: _getRcAux2
+            getRcAux2: _getRcAux2,
+            getMotorsM1: _getMotorsM1,
+            getMotorsM2: _getMotorsM2,
+            getMotorsM3: _getMotorsM3,
+            getMotorsM4: _getMotorsM4,
+            getOthersDebug1: _getOthersDebug1,
+            getOthersDebug2: _getOthersDebug2,
+            getOthersDebug3: _getOthersDebug3,
+            getOthersDebug4: _getOthersDebug4,
+            getOthersHdg: _getOthersHdg,
+            getOthersAltitude: _getOthersAltitude,
+            getOthersArmado: _getOthersArmado,
+            getOtherSensor: _getOtherSensor
         };
 
 
@@ -83,10 +95,35 @@
             aux2: undefined
         }
 
+        //Motors
+        var dataServiceMotors = {
+            m1: undefined,
+            m2: undefined,
+            m3: undefined,
+            m4: undefined
+        }
+
+        var dataServiceOthers = {
+            debug1: undefined,
+            debug2: undefined,
+            debug3: undefined,
+            debug4: undefined,
+            hdg: undefined,
+            altitude: undefined,
+            armado: undefined,
+            sensor: undefined
+        }
+
 
         socket.on('dataToUi', function(data) {   
 
             switch(data.code){
+                case 101:
+                    //MSP_STATUS
+                    dataServiceOthers.sensor = data.data[2];
+                    dataServiceOthers.armado = data.data[3];
+                    break;
+
                 case 102:
                     //MSP_RAW_IMU
                     dataServiceSensor.accRoll = data.data[0];
@@ -97,9 +134,17 @@
                     dataServiceSensor.gyroYaw = data.data[5];
                     dataServiceSensor.magRoll = data.data[6];
                     dataServiceSensor.magPitch = data.data[7];
-                    dataServiceSensor.magYaw = data.data[8];
-                    
+                    dataServiceSensor.magYaw = data.data[8];                    
                     break; 
+
+                case 104:
+                    //MSP_MOTOR
+                    dataServiceMotors.m1 = data.data[0];
+                    dataServiceMotors.m2 = data.data[1];
+                    dataServiceMotors.m3 = data.data[2];
+                    dataServiceMotors.m4 = data.data[3];
+                    break;
+
                 case 105:
                     //MSP_RC  
                     dataServiceRc.roll = data.data[0];
@@ -107,9 +152,9 @@
                     dataServiceRc.yaw = data.data[2];
                     dataServiceRc.thr = data.data[3];
                     dataServiceRc.aux1 = data.data[4];
-                    dataServiceRc.aux2 = data.data[5];
-                    
+                    dataServiceRc.aux2 = data.data[5];                    
                     break;
+
                 case 106: 
                     //MSP_RAW_GPS
                     dataServiceGps.gpsFix = data.data[0];
@@ -120,16 +165,24 @@
                     dataServiceGps.gpsSpeed = data.data[5];
                     dataServiceGps.gpsGroundCourse = data.data[6];
                     break;
+
                 case 108:
                     //MSP_ATTITUDE
-                    //dataService.angx = data.data[0]; // 1/10 deg
-                    //dataService.angy = data.data[1]; // 1/10 deg
-                    //dataService.hdg = data.data[2]; // -180 to 180
+                    dataServiceOthers.angx = data.data[0]; // 1/10 deg
+                    dataServiceOthers.angy = data.data[1]; // 1/10 deg
+                    dataServiceOthers.hdg = data.data[2]; // -180 to 180
                     break;
+
                 case 109:
                     //MSP_ALTITUDE
-                    //dataService.atitude = data.data[0];
+                    dataServiceOthers.altitude = data.data[0];
                     break;
+
+                case 112:
+                    //MSP_PID
+                    //console.log('teste' + data.data[1][3]);
+                    break;
+
                 case 118:
                     //MSP_WP
                     dataServiceWP.wp_no = data.data[0];
@@ -139,7 +192,15 @@
                     dataServiceWP.Heading = data.data[4];
                     dataServiceWP.Time_to_stay = data.data[5];
                     dataServiceWP.Nav_flag = data.data[6];
-                    //console.log(data);          
+                    break;
+
+                case 254:
+                    //MSP_DEBUG
+                    dataServiceOthers.debug1 = data.data[0];
+                    dataServiceOthers.debug2 = data.data[1];
+                    dataServiceOthers.debug3 = data.data[2];
+                    dataServiceOthers.debug4 = data.data[3];
+                    break;
             }                  
         });
 
@@ -232,6 +293,56 @@
 
         function _getRcAux2(){
             return dataServiceRc.aux2;
+        }
+
+        //Motors
+        function _getMotorsM1(){
+            return dataServiceMotors.m1;
+        }
+
+        function _getMotorsM2(){
+            return dataServiceMotors.m2;
+        }
+
+        function _getMotorsM3(){
+            return dataServiceMotors.m3;
+        }
+
+        function _getMotorsM4(){
+            return dataServiceMotors.m4;
+        }
+
+        //Others
+        function _getOthersDebug1(){
+            return dataServiceOthers.debug1;
+        }
+
+        function _getOthersDebug2(){
+            return dataServiceOthers.debug2;
+        }
+
+        function _getOthersDebug3(){
+            return dataServiceOthers.debug3;
+        }
+
+        function _getOthersDebug4(){
+            return dataServiceOthers.debug4;
+        }
+
+        function _getOthersHdg(){
+            return dataServiceOthers.hdg;
+        }
+
+        function _getOthersAltitude(){
+            return dataServiceOthers.altitude;
+        }
+
+        function _getOthersArmado(){
+            return dataServiceOthers.armado;
+        }
+
+        function _getOtherSensor(){
+            return dataServiceOthers.sensor;
         }
 
 

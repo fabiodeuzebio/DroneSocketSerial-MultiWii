@@ -23,7 +23,7 @@ serial.conect = function(porta, baudrate, control){
 	  	if ( error ) {
 	    	console.log('Falha ao abrir a Porta: '+error);
 	  	} else {
-	    	console.log('COM22 aberta a 115200 BPS, esperando 5 segundos para requisitar dados');
+	    	console.log('COM37 aberta a 57600 BPS, esperando 5 segundos para requisitar dados');
 		}
 	});
 
@@ -100,18 +100,18 @@ function sleep(time) {
 }
 
 function requestLoop() {
-    //sp.write(MSP.msg(MSP.codes.MSP_RAW_GPS));    
-    // sp.write(MSP.msg(MSP.codes.MSP_ALTITUDE));    
-    // sp.write(MSP.msg(MSP.codes.MSP_ATTITUDE));
-    //sp.write(MSP.msg(MSP.codes.MSP_RAW_IMU));
-    //sp.write(MSP.msg(MSP.codes.MSP_MOTOR));
-    //sp.write(MSP.msg(MSP.codes.MSP_RC));
-    //sp.write(MSP.msg(MSP.codes.MSP_DEBUG));    
-    sp.write(MSP.msg(MSP.codes.MSP_PID));    
+    sp.write(MSP.msg(MSP.codes.MSP_RAW_GPS));    
+    sp.write(MSP.msg(MSP.codes.MSP_ALTITUDE));    
+    sp.write(MSP.msg(MSP.codes.MSP_ATTITUDE));
+    sp.write(MSP.msg(MSP.codes.MSP_RAW_IMU));
+    sp.write(MSP.msg(MSP.codes.MSP_MOTOR));
+    sp.write(MSP.msg(MSP.codes.MSP_RC));
+    sp.write(MSP.msg(MSP.codes.MSP_DEBUG));    
+    //sp.write(MSP.msg(MSP.codes.MSP_PID));    
     //sp.write(MSP.msg(MSP.codes.MSP_WP));
     //sp.write(MSP.msg(MSP.codes.MSP_PIDNAMES));  
     //sp.write(MSP.msg(MSP.codes.MSP_IDENT));
-    //sp.write(MSP.msg(MSP.codes.MSP_STATUS));
+    sp.write(MSP.msg(MSP.codes.MSP_STATUS));
     //sp.write(MSP.msg(MSP.codes.MSP_BOXNAMES));    
 }    
 
